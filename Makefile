@@ -6,7 +6,7 @@
 #    By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/25 11:27:37 by tmaluh            #+#    #+#              #
-#    Updated: 2019/08/12 13:09:30 by tmaluh           ###   ########.fr        #
+#    Updated: 2019/08/12 20:41:23 by tmaluh           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ CC_DEBUG := $(CC_BASE) -g3 -D DEBUG
 CC_PROFILE := $(CC_BASE) -no-pie -pg -O0
 
 CFLAGS := -Wall -Wextra -Werror -Wunused
-INC := -I $(CURDIR)/includes/ \
+INC := -I ~/.brew/include \
+	-I $(CURDIR)/includes/ \
 	-I $(CURDIR)/../libft/includes \
 	-I $(CURDIR)/../libftsdl/includes \
 	-I $(CURDIR)/../libvectors/includes
