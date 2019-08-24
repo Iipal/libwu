@@ -6,7 +6,7 @@
 #    By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/25 11:27:37 by tmaluh            #+#    #+#              #
-#    Updated: 2019/08/23 22:05:15 by tmaluh           ###   ########.fr        #
+#    Updated: 2019/08/24 17:31:47 by tmaluh           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ INC := -I ~/.brew/include \
 	-I $(CURDIR)/../libftsdl/includes \
 	-I $(CURDIR)/../libvectors
 
-SRCS := $(abspath $(wildcard srcs/wu_draw_line.c))
+SRCS := $(abspath $(wildcard srcs/*.c))
 OBJS := $(SRCS:%.c=%.o)
 
 DEL := rm -rf
