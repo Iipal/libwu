@@ -6,7 +6,7 @@
 #    By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/25 11:27:37 by tmaluh            #+#    #+#              #
-#    Updated: 2019/08/24 17:31:47 by tmaluh           ###   ########.fr        #
+#    Updated: 2019/09/02 21:56:47 by tmaluh           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,49 +51,49 @@ SUCCESS = [$(GREEN)✓$(WHITE)]
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "$(INVERT)"
-	@echo -n ' <=-=> | $(NPWD): '
+	@echo -e "$(INVERT)"
+	@echo -e -n ' <=-=> | $(NPWD): '
 	@$(LC) $(NAME) $(OBJS)
-	@echo "[$(GREEN)✓$(WHITE)$(INVERT)]$(WHITE)"
-	@echo
+	@echo -e "[$(GREEN)✓$(WHITE)$(INVERT)]$(WHITE)"
+	@echo -e
 
 $(OBJS): %.o: %.c
-	@echo -n ' $@: '
+	@echo -e -n ' $@: '
 	@$(CC) -c $(CFLAGS) $(INC) $< -o $@
-	@echo "$(SUCCESS)"
+	@echo -e "$(SUCCESS)"
 
 del:
 	@$(DEL) $(OBJS)
 	@$(DEL) $(NAME)
 
 pre: del $(NAME)
-	@echo "$(INVERT)$(GREEN)Successed re-build.$(WHITE)"
+	@echo -e "$(INVERT)$(GREEN)Successed re-build.$(WHITE)"
 
 set_cc_debug:
 	@$(eval CC=$(CC_DEBUG))
 debug_all: set_cc_debug pre
-	@echo "$(INVERT)$(NAME) $(GREEN)ready for debug.$(WHITE)"
+	@echo -e "$(INVERT)$(NAME) $(GREEN)ready for debug.$(WHITE)"
 debug: set_cc_debug all
-	@echo "$(INVERT)$(NAME) $(GREEN)ready for debug.$(WHITE)"
+	@echo -e "$(INVERT)$(NAME) $(GREEN)ready for debug.$(WHITE)"
 
 set_cc_profle:
 	@$(eval CC=$(CC_PROFILE))
 profile_all: set_cc_profle pre
-	@echo "$(INVERT)$(NAME) $(GREEN)ready for profile.$(WHITE)"
+	@echo -e "$(INVERT)$(NAME) $(GREEN)ready for profile.$(WHITE)"
 profile: set_cc_profle all
-	@echo "$(INVERT)$(NAME) $(GREEN)ready for profile.$(WHITE)"
+	@echo -e "$(INVERT)$(NAME) $(GREEN)ready for profile.$(WHITE)"
 
 clean:
 	@$(DEL) $(OBJS)
 
 fclean: clean
 	@$(DEL) $(NAME)
-	@echo "$(INVERT)$(RED)deleted$(WHITE)$(INVERT): $(NPWD)$(WHITE)"
+	@echo -e "$(INVERT)$(RED)deleted$(WHITE)$(INVERT): $(NPWD)$(WHITE)"
 
 re: fclean all
 
 norme:
-	@echo "$(INVERT)norminette for $(GREEN)$(NAME)$(WHITE)$(INVERT):$(WHITE)"
+	@echo -e "$(INVERT)norminette for $(GREEN)$(NAME)$(WHITE)$(INVERT):$(WHITE)"
 	@norminette includes/
 	@norminette $(SRCS)
 
