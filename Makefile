@@ -6,7 +6,7 @@
 #    By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/25 11:27:37 by tmaluh            #+#    #+#              #
-#    Updated: 2019/09/02 21:56:47 by tmaluh           ###   ########.fr        #
+#    Updated: 2019/11/05 12:35:13 by tmaluh           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME := libwu.a
 NPWD := $(CURDIR)/$(NAME)
 
 UNAME_S := $(shell uname -s)
+ECHO := echo
 ifeq ($(UNAME_S),Linux)
+	ECHO += -e
 	LC := gcc-ar
 endif
 ifeq ($(UNAME_S),Darwin)
@@ -36,7 +38,7 @@ INC := -I ~/.brew/include \
 	-I $(CURDIR)/../libftsdl/includes \
 	-I $(CURDIR)/../libvectors
 
-SRCS := $(abspath $(wildcard srcs/*.c))
+SRCS := $(abspath $(wildcard srcs/wu_draw_line.c))
 OBJS := $(SRCS:%.c=%.o)
 
 DEL := rm -rf
@@ -51,49 +53,49 @@ SUCCESS = [$(GREEN)✓$(WHITE)]
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo -e "$(INVERT)"
-	@echo -e -n ' <=-=> | $(NPWD): '
+	@$(ECHO) "$(INVERT)"
+	@$(ECHO) -n ' <=-=> | $(NPWD): '
 	@$(LC) $(NAME) $(OBJS)
-	@echo -e "[$(GREEN)✓$(WHITE)$(INVERT)]$(WHITE)"
-	@echo -e
+	@$(ECHO) "[$(GREEN)✓$(WHITE)$(INVERT)]$(WHITE)"
+	@$(ECHO)
 
 $(OBJS): %.o: %.c
-	@echo -e -n ' $@: '
+	@$(ECHO) -n ' $@: '
 	@$(CC) -c $(CFLAGS) $(INC) $< -o $@
-	@echo -e "$(SUCCESS)"
+	@$(ECHO) "$(SUCCESS)"
 
 del:
 	@$(DEL) $(OBJS)
 	@$(DEL) $(NAME)
 
 pre: del $(NAME)
-	@echo -e "$(INVERT)$(GREEN)Successed re-build.$(WHITE)"
+	@$(ECHO) "$(INVERT)$(GREEN)Successed re-build.$(WHITE)"
 
 set_cc_debug:
 	@$(eval CC=$(CC_DEBUG))
 debug_all: set_cc_debug pre
-	@echo -e "$(INVERT)$(NAME) $(GREEN)ready for debug.$(WHITE)"
+	@$(ECHO) "$(INVERT)$(NAME) $(GREEN)ready for debug.$(WHITE)"
 debug: set_cc_debug all
-	@echo -e "$(INVERT)$(NAME) $(GREEN)ready for debug.$(WHITE)"
+	@$(ECHO) "$(INVERT)$(NAME) $(GREEN)ready for debug.$(WHITE)"
 
 set_cc_profle:
 	@$(eval CC=$(CC_PROFILE))
 profile_all: set_cc_profle pre
-	@echo -e "$(INVERT)$(NAME) $(GREEN)ready for profile.$(WHITE)"
+	@$(ECHO) "$(INVERT)$(NAME) $(GREEN)ready for profile.$(WHITE)"
 profile: set_cc_profle all
-	@echo -e "$(INVERT)$(NAME) $(GREEN)ready for profile.$(WHITE)"
+	@$(ECHO) "$(INVERT)$(NAME) $(GREEN)ready for profile.$(WHITE)"
 
 clean:
 	@$(DEL) $(OBJS)
 
 fclean: clean
 	@$(DEL) $(NAME)
-	@echo -e "$(INVERT)$(RED)deleted$(WHITE)$(INVERT): $(NPWD)$(WHITE)"
+	@$(ECHO) "$(INVERT)$(RED)deleted$(WHITE)$(INVERT): $(NPWD)$(WHITE)"
 
 re: fclean all
 
 norme:
-	@echo -e "$(INVERT)norminette for $(GREEN)$(NAME)$(WHITE)$(INVERT):$(WHITE)"
+	@$(ECHO) "$(INVERT)norminette for $(GREEN)$(NAME)$(WHITE)$(INVERT):$(WHITE)"
 	@norminette includes/
 	@norminette $(SRCS)
 

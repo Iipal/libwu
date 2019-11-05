@@ -6,7 +6,7 @@
 /*   By: tmaluh <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 18:30:41 by tmaluh            #+#    #+#             */
-/*   Updated: 2019/08/12 13:11:16 by tmaluh           ###   ########.fr       */
+/*   Updated: 2019/11/05 12:42:10 by tmaluh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,31 @@ extern __wu_always_inline void
 putpxl_plot(const size_t x,
 			const size_t y,
 			const double_t c,
-			SDL_Surface *restrict const surf,
-			Color const fg_clr)
+			SDL_Surface *restrict surf,
+			const Color fg_clr)
 {
 	if (0.0f <= c && 1.0f >= c)
 		if (x && y && (size_t)surf->w > x && (size_t)surf->h > y) {
-			Uint32 *const	pxls = (Uint32 *const)surf->pixels;
-			Color			orig = { pxls[y * surf->w + x] };
-
+			Uint32 *restrict	pxls = (Uint32 *restrict)surf->pixels;
+			Color				orig = { pxls[y * surf->w + x] };
 			Color	pxl_clr = sdl_clrs_bright_inc((Color){0x0}, fg_clr, c);
+
 			if (1.0 > c && orig.hex)
 				pxl_clr = sdl_clrs_bright_inc(pxl_clr, orig, 1.0f - c);
 			pxls[y * surf->w + x] = pxl_clr.hex;
 		}
 }
 
-extern __wu_always_inline double_t
+static __wu_always_inline double_t
 u_ipart(double_t x) { return floor(x); }
 
-extern __wu_always_inline double_t
+static __wu_always_inline double_t
 u_round(double_t x) { return u_ipart(x + 0.5f); }
 
-extern __wu_always_inline double_t
+static __wu_always_inline double_t
 u_fpart(double_t x) { return x - floor(x); }
 
-extern __wu_always_inline double_t
+static __wu_always_inline double_t
 u_rfpart(double_t x) { return 1 - u_fpart(x); }
 
 
@@ -61,11 +61,11 @@ u_rfpart(double_t x) { return 1 - u_fpart(x); }
 **	 A = √(X²+Y²) = √((X2-X1)²+(Y2-Y1)²).
 */
 extern __wu_always_inline double_t
-u_line_len(__v2df const x1,
-			__v2df const x2)
+u_line_len(const __v2df x1,
+			const __v2df x2)
 {
-	double_t const	x = x2[0] - x1[0];
-	double_t const	y = x2[1] - x1[1];
+	const double_t	x = x2[0] - x1[0];
+	const double_t	y = x2[1] - x1[1];
 
 	return sqrt((x * x) + (y * y));
 }
